@@ -1,15 +1,42 @@
 # Mlperf Inference DeepSeek Reference Implementation
 
-## Model & Dataset Download
+## Model Download
 
 > **Model**: [deepseek-ai/DeepSeek-R1](https://huggingface.co/deepseek-ai/DeepSeek-R1) (revision: `56d4cbbb4d29f4355bab4b9a39ccb717a14ad5ad`)
 
 - DeepSeek-R1 model is automatically downloaded as part of setup
 - Checkpoint conversion is done transparently when needed.
 
-Please download the Mlperf-Inference DeepSeek-r1 Dataset:
-```bash
-<>
+
+## Dataset Download
+
+### Preprocessed
+
+You can use Rclone to download the preprocessed dataset from a Cloudflare R2 bucket.
+
+To run Rclone on Windows, you can download the executable [here](https://rclone.org/install/#windows).
+To install Rclone on Linux/macOS/BSD systems, run:
+```
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
+```
+Once Rclone is installed, run the following command to authenticate with the bucket:
+```
+rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
+```
+You can then navigate in the terminal to your desired download directory and run the following command to download the dataset:
+
+```
+rclone copy mlc-inference:mlcommons-inference-wg-public/deepseek_r1/mlperf_deepseek_r1_dataset_4388_fp8_eval.pkl ./ -P
+```
+
+### Calibration
+
+Download and install Rclone as described in the previous section.
+
+Then navigate in the terminal to your desired download directory and run the following command to download the dataset:
+
+```
+rclone copy mlc-inference:mlcommons-inference-wg-public/deepseek_r1/mlperf_deepseek_r1_calibration_dataset_500_fp8_eval.pkl ./ -P
 ```
 
 ## Docker
